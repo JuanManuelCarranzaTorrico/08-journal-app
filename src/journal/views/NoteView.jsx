@@ -1,10 +1,10 @@
-import { SaveOutlined, UploadOutlined } from "@mui/icons-material"
+import { DeleteOutline, SaveOutlined, UploadOutlined } from "@mui/icons-material"
 import { Button, Grid, IconButton, TextField, Typography } from "@mui/material"
 import { ImageGalery } from "../components"
 import { useForm } from '../../hooks'
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useMemo, useRef } from "react"
-import { setActiveNote, startSaveNote, startUploadingFile } from "../../store/journal"
+import { setActiveNote, starDeletingNote, startSaveNote, startUploadingFile } from "../../store/journal"
 import Swal from "sweetalert2"
 
 
@@ -41,6 +41,10 @@ export const NoteView = () => {
     const onFileInputChange = ({target}) => {
         if(target.files === 0) return;
         dispatch( startUploadingFile(target.files))
+    }
+    const onDelete = () => {
+        // dispatch()
+        dispatch( starDeletingNote())
     }
   return (
     <Grid container direction={'row'} justifyContent={'space-between'} alignItems={'center'} sx={{mb: 1}} className='animate__animated animate__fadeIn animate__faster'>
@@ -90,6 +94,16 @@ export const NoteView = () => {
                 value={body}
                 onChange={onInputChange}
                 />
+        </Grid>
+        <Grid container justifyContent={'end'}>
+            <Button 
+            onClick={onDelete}
+            sx={{mt: 2}}
+            color="error"
+            >
+                <DeleteOutline/>
+                Borrar
+            </Button>
         </Grid>
         {/* Galeria de imagenes */}
         <ImageGalery images = {note.imageUrls} />
